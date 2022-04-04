@@ -139,11 +139,14 @@ def echo(update, context):
 
 def rus_rullete(update, context):
     try:
+        pull = random.randrange(1, 6)
         die = int(context.args[0])
-        if random.randrange(1, 6) != die:
+        if pull != die:
             update.message.reply_text("Тебе повезло, не сдох сегодня", reply_markup=general)
+            print(pull)
         else:
             update.message.reply_text("Тебе не повезло, сдох сегодня", reply_markup=general)
+            print(pull)
 
     except:
         update.message.reply_text("для использования введи: /rullete <число от 1 до 6>")
