@@ -1,13 +1,21 @@
 # Импортируем необходимые классы.
+import random
+
 from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext import CallbackContext, CommandHandler
 from _datetime import datetime
 from telegram import ReplyKeyboardMarkup
 
 
-reply_keyboard = [['/start', '/date'],
-                      ['/help', '/unset']]
+reply_keyboard = [['/dice', '/timer']]
 general = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False)
+Whatcubes = [['/roll_one_six_sided_die'], ['/roll_two_six_sided_die'],
+             ['/roll_one_twenty_sided_die'], ['/back']]
+cubes = ReplyKeyboardMarkup(Whatcubes, one_time_keyboard=False)
+What_time = [['/set 30', '/set 60'], ['/set 300', '/back']]
+set_time = ReplyKeyboardMarkup(What_time, one_time_keyboard=False)
+close = ReplyKeyboardMarkup([['/unset']], one_time_keyboard=False)
+
 
 
 # Напишем соответствующие функции.
@@ -21,7 +29,7 @@ def start(update, context):
 
 def help(update, context):
     update.message.reply_text(
-        "Я пока не умею помогать... Я только ваше эхо.", reply_markup=general)
+        "Я пока не умею помогать... Я только ваше эхо.")
 
 
 def nowDate(update, context):
@@ -72,7 +80,7 @@ def set_timer(update, context):
         if job_removed:
             text += ' Старая задача удалена.'
         # Присылаем сообщение о том, что всё получилось.
-        update.message.reply_text(text)
+        update.message.reply_text(text, reply_markup=close)
 
     except (IndexError, ValueError):
         update.message.reply_text('Использование: /set <секунд>')
@@ -88,7 +96,40 @@ def unset_timer(update, context):
     chat_id = update.message.chat_id
     job_removed = remove_job_if_exists(str(chat_id), context)
     text = 'Хорошо, вернулся сейчас!' if job_removed else 'Нет активного таймера.'
-    update.message.reply_text(text)
+    update.message.reply_text(text, reply_markup=general)
+
+
+def dice(update, context):
+    update.message.reply_text(
+        "Выбирай кубик, ничтожество-_-",
+        reply_markup=cubes
+    )
+
+
+def what_want_time(update, context):
+    update.message.reply_text(
+        "Выбирай время, ничтожество-_-",
+        reply_markup=set_time
+    )
+
+
+def one_cube(update, context):
+    update.message.reply_text(
+        f"{random.randrange(0, 6)}")
+
+
+def two_cube(update, context):
+    update.message.reply_text(
+        f"{random.randrange(0, 6)} и {random.randrange(0, 6)}")
+
+
+def one_20_cube(update, context):
+    update.message.reply_text(
+        f"{random.randrange(0, 20)}")
+
+def back(update, context):
+    update.message.reply_text(
+        "Ну и пока:(", reply_markup=general)
 
 
 def echo(update, context):
@@ -104,6 +145,14 @@ def main():
     dp.add_handler(CommandHandler("date", nowDate))
     dp.add_handler(CommandHandler("time", nowTime))
     dp.add_handler(CommandHandler("help", help))
+
+    dp.add_handler(CommandHandler("dice", dice))
+    dp.add_handler(CommandHandler("roll_one_six_sided_die", one_cube))
+    dp.add_handler(CommandHandler("roll_two_six_sided_die", two_cube))
+    dp.add_handler(CommandHandler("roll_one_twenty_sided_die", one_20_cube))
+    dp.add_handler(CommandHandler("back", back))
+    dp.add_handler(CommandHandler("timer", what_want_time))
+
 
     text_handler = MessageHandler(Filters.text, echo)
 
