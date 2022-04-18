@@ -31,7 +31,7 @@ def main():
         },
 
         # Точка прерывания диалога. В данном случае — команда /stop.
-        fallbacks=[CommandHandler('stop', stop)]
+        fallbacks=[CommandHandler('back', back)]
     )
 
     weather_in_you_city = ConversationHandler(
@@ -47,7 +47,7 @@ def main():
         },
 
         # Точка прерывания диалога. В данном случае — команда /stop.
-        fallbacks=[CommandHandler('stop', stop)]
+        fallbacks=[CommandHandler('back', back)]
     )
 
     Wiki = ConversationHandler(
@@ -66,7 +66,7 @@ def main():
         },
 
         # Точка прерывания диалога. В данном случае — команда /stop.
-        fallbacks=[CommandHandler('stop', stop)]
+        fallbacks=[CommandHandler('back', back)]
     )
 
     SeeWikiTerm = ConversationHandler(
@@ -82,7 +82,7 @@ def main():
         },
 
         # Точка прерывания диалога. В данном случае — команда /stop.
-        fallbacks=[CommandHandler('stop', stop)]
+        fallbacks=[CommandHandler('back', back)]
     )
 
     dp.add_handler(weather_in_you_city)

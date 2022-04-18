@@ -80,7 +80,7 @@ def VievAuthorTerm(update, context):
                                   'thank you for using our Iwiki', reply_markup=general)
         return ConversationHandler.END
     except:
-        update.message.reply_text('This term has not yet been added to our database.')
+        update.message.reply_text('This term has not yet been added to our database.', reply_markup=comeback)
         return ConversationHandler.END
 
 
@@ -88,11 +88,11 @@ def VievSpecTerm(update, context):
     con = sqlite3.connect('db/Iwiki.db')
     cur = con.cursor()
     try:
-        result = cur.execute(f"""SELECT think, about_think FROM Iwiki where think = '{update.message.text}'""").fetchall()
-        update.message.reply_text(f'{result[0][0]} — {result[0][1]}', reply_markup=general)
+        result = cur.execute(f"""SELECT think, about_think, name FROM Iwiki where think = '{update.message.text}'""").fetchall()
+        update.message.reply_text(f'{result[0][0]} — {result[0][1]}, Author: {result[0][2]}', reply_markup=general)
         return ConversationHandler.END
     except:
-        update.message.reply_text('This term has not yet been added to our database.')
+        update.message.reply_text('This term has not yet been added to our database.', reply_markup=comeback)
         return ConversationHandler.END
 
 
