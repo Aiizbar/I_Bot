@@ -58,10 +58,10 @@ def WantToSeeTerm(update, context):
 
 def IwantToSeeTermOrAuthor(update, context):
     if update.message.text == 'specific term':
-        update.message.reply_text('please enter the desired term')
+        update.message.reply_text('please enter the desired term', reply_markup=comeback)
         return 11
     elif update.message.text == 'Author':
-        update.message.reply_text('please enter the desired Author')
+        update.message.reply_text('please enter the desired Author', reply_markup=comeback)
         return 12
     else:
         update.message.reply_text("I don't have this function")
