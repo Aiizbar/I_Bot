@@ -5,7 +5,6 @@ from Weather import *
 from general import *
 from time_in_bot import *
 from Dice import *
-from compare import *
 from MyWiki import *
 
 
