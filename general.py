@@ -52,7 +52,7 @@ def stop(update, context):
 
 def what_want_time(update, context):
     update.message.reply_text(
-        "Выбирай время, ничтожество-_-",
+        "Pick your time, you bastard -_-",
         reply_markup=set_time
     )
 

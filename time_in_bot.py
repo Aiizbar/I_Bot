@@ -23,7 +23,7 @@ def set_timer(update, context):
         due = int(context.args[0])
         if due < 0:
             update.message.reply_text(
-                'Извините, не умеем возвращаться в прошлое')
+                "Sorry, we can't go back in time")
             return
 
         # Добавляем задачу в очередь
@@ -38,24 +38,24 @@ def set_timer(update, context):
             context=chat_id,
             name=str(chat_id)
         )
-        text = f'Вернусь через {due} секунд!'
+        text = f"I'll be back in {due} seconds!"
         if job_removed:
-            text += ' Старая задача удалена.'
+            text += 'The old task has been removed.'
         # Присылаем сообщение о том, что всё получилось.
         update.message.reply_text(text, reply_markup=close)
 
     except (IndexError, ValueError):
-        update.message.reply_text('Использование: /set <секунд>')
+        update.message.reply_text('Usage: /set <seconds>')
 
 
 def task(context):
     """Выводит сообщение"""
     job = context.job
-    context.bot.send_message(job.context, text='Вернулся!')
+    context.bot.send_message(job.context, text='returned!')
 
 
 def unset_timer(update, context):
     chat_id = update.message.chat_id
     job_removed = remove_job_if_exists(str(chat_id), context)
-    text = 'Хорошо, вернулся сейчас!' if job_removed else 'Нет активного таймера.'
+    text = 'Okay, back now!' if job_removed else 'There is no active timer.'
     update.message.reply_text(text, reply_markup=general)

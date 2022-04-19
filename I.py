@@ -14,8 +14,6 @@ def main():
 
     dp = updater.dispatcher
 
-    # dp.add_handler(CommandHandler("start", start))
-
     conv_handler = ConversationHandler(
         # Точка входа в диалог.
         # В данном случае — команда /start. Она задаёт первый вопрос.
@@ -30,13 +28,13 @@ def main():
             2: [MessageHandler(Filters.text & ~Filters.command, second_response)]
         },
 
-        # Точка прерывания диалога. В данном случае — команда /stop.
+        # Точка прерывания диалога. В данном случае — команда /back.
         fallbacks=[CommandHandler('back', back)]
     )
 
     weather_in_you_city = ConversationHandler(
         # Точка входа в диалог.
-        # В данном случае — команда /start. Она задаёт первый вопрос.
+        # В данном случае — команда /weather. Она задаёт первый вопрос.
         entry_points=[CommandHandler('weather', WhatCity)],
 
         # Состояние внутри диалога.
@@ -65,7 +63,7 @@ def main():
             4: [MessageHandler(Filters.text & ~Filters.command, generalInfo)]
         },
 
-        # Точка прерывания диалога. В данном случае — команда /stop.
+        # Точка прерывания диалога. В данном случае — команда /back.
         fallbacks=[CommandHandler('back', back)]
     )
 
@@ -81,7 +79,7 @@ def main():
             12: [MessageHandler(Filters.text & ~Filters.command, VievAuthorTerm)]
         },
 
-        # Точка прерывания диалога. В данном случае — команда /stop.
+        # Точка прерывания диалога. В данном случае — команда /back.
         fallbacks=[CommandHandler('back', back)]
     )
 

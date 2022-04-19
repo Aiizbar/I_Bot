@@ -4,7 +4,7 @@ from option import *
 
 def dice(update, context):
     update.message.reply_text(
-        "Выбирай кубик, ничтожество-_-",
+        "Pick a dice, you jerk -_-",
         reply_markup=cubes
     )
 
@@ -16,7 +16,7 @@ def one_cube(update, context):
 
 def two_cube(update, context):
     update.message.reply_text(
-        f"{random.randrange(1, 6)} и {random.randrange(0, 6)}")
+        f"{random.randrange(1, 6)} и {random.randrange(1, 6)}")
 
 
 def one_20_cube(update, context):
@@ -29,10 +29,10 @@ def rus_rullete(update, context):
         pull = random.randrange(1, 6)
         die = int(context.args[0])
         if pull != die:
-            update.message.reply_text("Тебе повезло, не сдох сегодня", reply_markup=general)
+            update.message.reply_text("You're lucky you didn't die today", reply_markup=general)
             print(pull)
         else:
-            update.message.reply_text("Тебе не повезло, сдох сегодня", reply_markup=general)
+            update.message.reply_text("You're out of luck, died today", reply_markup=general)
             print(pull)
     except:
-        update.message.reply_text("для использования введи: /rullete <число от 1 до 6>")
+        update.message.reply_text("to use type: /rullete <number from 1 to 6>")
